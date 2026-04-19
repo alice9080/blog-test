@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>旅行动态</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial;
+    background: linear-gradient(to right, #eef7ff, #f6fbff);
+}
+
+/* ===== 整体三栏均衡布局 ===== */
+.layout {
+    display: flex;
+    max-width: 1200px;
+    margin: auto;
+    gap: 10px;
+}
+
+/* ================= 左侧（信息增强） ================= */
+.sidebar {
+    width: 22%;
+    padding: 15px;
+}
+
+/* 用户卡 */
+.profile {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #1da1f2;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    font-weight: bold;
+}
+
+.profile p {
+    margin: 8px 0 0;
+    font-size: 14px;
+    color: gray;
+}
+
+/* 导航 */
+.sidebar a {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 20px;
+    text-decoration: none;
+    color: #333;
+    margin-top: 8px;
+}
+
+.sidebar a:hover {
+    background: #dbeeff;
+}
+
+.post-btn {
+    background: #1da1f2;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    border-radius: 20px;
+    margin-top: 15px;
+}
+
+/* ================= 中间 ================= */
+.main {
+    width: 46%;
+    background: white;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+}
+
+.header {
+    padding: 15px;
+    background: #f0f8ff;
+    font-weight: bold;
+}
+
+/* 发帖 */
+.editor {
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.editor textarea {
+    width: 100%;
+    height: 70px;
+    border: none;
+    outline: none;
+    resize: none;
+}
+
+.editor input {
+    width: 100%;
+    margin-top: 8px;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.editor button {
+    margin-top: 8px;
+    background: #1da1f2;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+/* 动态 */
+.post {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.post img {
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    color: gray;
+}
+
+/* ================= 右侧（轻量信息） ================= */
+.rightbar {
+    width: 32%;
+    padding: 15px;
+}
+
+/* 卡片 */
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+/* 相册 */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+}
+
+.gallery img {
+    width: 100%;
+    border-radius: 6px;
+}
+
+/* 标签 */
+.tags span {
+    display: inline-block;
+    background: #e8f5fe;
+    padding: 4px 8px;
+    border-radius: 15px;
+    margin: 3px;
+    font-size: 12px;
+}
+
+/* 列表 */
+.list {
+    font-size: 14px;
+    color: #333;
+}
+
+.list div {
+    margin: 5px 0;
+}
+
+/* 工具 */
+.tool {
+    display: block;
+    background: #e8f5fe;
+    padding: 6px;
+    border-radius: 10px;
+    margin-top: 6px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.tool:hover {
+    background: #d0eaff;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="layout">
+
+<!-- 左侧（增强+对称） -->
+<div class="sidebar">
+
+    <div class="profile">
+        <div class="avatar">我</div>
+        <p>旅行博主 · 摄影爱好者</p>
+    </div>
+
+    <a href="#"><i class="fa-solid fa-house"></i> 首页</a>
+    <a href="#"><i class="fa-solid fa-image"></i> 相册</a>
+    <a href="#"><i class="fa-solid fa-map"></i> 足迹</a>
+    <a href="#"><i class="fa-solid fa-book"></i> 游记</a>
+
+    <div class="post-btn">发布动态</div>
+</div>
+
+<!-- 中间（核心） -->
+<div class="main">
+
+    <div class="header">旅行动态</div>
+
+    <div class="editor">
+        <div>
+            <textarea id="text" placeholder="分享你的旅行故事..."></textarea>
+            <input id="img" placeholder="图片链接（可选）">
+            <button onclick="addPost()">发布</button>
+        </div>
+    </div>
+
+    <div id="postList"></div>
+
+</div>
+
+<!-- 右侧（轻量均衡） -->
+<div class="rightbar">
+
+    <div class="card">
+        <h3>📷 相册</h3>
+        <div class="gallery">
+            <img src="images/beach.jpg">
+            <img src="images/mountain.jpg">
+            <img src="images/city.jpg">
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>🌍 热门目的地</h3>
+        <div class="tags">
+            <span>#东京</span>
+            <span>#巴黎</span>
+            <span>#冰岛</span>
+            <span>#巴厘岛</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>🗺 足迹</h3>
+        <div class="list">
+            <div>📍 上海</div>
+            <div>📍 东京</div>
+            <div>📍 首尔</div>
+            <div>📍 新加坡</div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>🧰 工具</h3>
+        <div class="tool">🗺 地图</div>
+        <div class="tool">📝 行程</div>
+        <div class="tool">📅 日历</div>
+    </div>
+
+</div>
+
+</div>
+
+<script>
+function addPost() {
+    let text = document.getElementById("text").value;
+    let img = document.getElementById("img").value;
+
+    if (!text.trim()) return alert("请输入内容");
+
+    let post = document.createElement("div");
+    post.className = "post";
+
+    post.innerHTML = `
+        <p>${text}</p>
+        ${img ? `<img src="${img}">` : ""}
+        <div class="actions">
+            <span>💬 评论</span>
+            <span>🔁 转发</span>
+            <span>❤️ 喜欢</span>
+        </div>
+    `;
+
+    document.getElementById("postList").prepend(post);
+
+    document.getElementById("text").value = "";
+    document.getElementById("img").value = "";
+}
+</script>
+
+</body>
+</html>
