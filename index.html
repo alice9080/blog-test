@@ -1,155 +1,50 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh">
 <head>
 <meta charset="UTF-8">
-<title>旅行动态</title>
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<title>我的旅行博客</title>
 
 <style>
-
 body {
     margin: 0;
     font-family: Arial;
-    background: linear-gradient(to right, #eef7ff, #f6fbff);
+    background: #eaf4ff;
 }
 
-/* ===== 整体三栏均衡布局 ===== */
-。layout {
+/* 三栏布局 */
+.container {
     display: flex;
-    max-width: 1200px;
-    margin: auto;
-    gap: 10px;
 }
 
-/* ================= 左侧（信息增强） ================= */
-。sidebar {
-    width: 22%;
+/* 左侧导航 */
+.left {
+    width: 20%;
+    background: #d8ecff;
     padding: 15px;
 }
 
-/* 用户卡 */
-。profile {
-    background: white;
-    padding: 15px;
-    border-radius: 12px;
-    margin-bottom: 15px;
-    text-align: center;
+.left h3 {
+    margin-top: 0;
 }
 
-.avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: #1da1f2;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: auto;
-    font-weight: bold;
-}
-
-.profile p {
-    margin: 8px 0 0;
-    font-size: 14px;
-    color: gray;
-}
-
-/* 导航 */
-.sidebar a {
-    display: flex;
-    gap: 10px;
+.nav-item {
     padding: 10px;
-    border-radius: 20px;
-    text-decoration: none;
-    color: #333;
-    margin-top: 8px;
-}
-
-。sidebar a:hover {
-    background: #dbeeff;
-}
-
-.post-btn {
-    background: #1da1f2;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    border-radius: 20px;
-    margin-top: 15px;
-}
-
-/* ================= 中间 ================= */
-.main {
-    width: 46%;
-    background: white;
-    border-left: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-}
-
-。header {
-    padding: 15px;
-    background: #f0f8ff;
-    font-weight: bold;
-}
-
-/* 发帖 */
-。editor {
-    display: flex;
-    gap: 10px;
-    padding: 15px;
-    border-bottom: 1px solid #eee;
-}
-
-.editor textarea {
-    width: 100%;
-    height: 70px;
-    border: none;
-    outline: none;
-    resize: none;
-}
-
-。editor input {
-    width: 100%;
-    margin-top: 8px;
-    padding: 8px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-}
-
-。editor button {
-    margin-top: 8px;
-    background: #1da1f2;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 20px;
+    margin: 8px 0;
+    background: #ffffff;
+    border-radius: 8px;
     cursor: pointer;
 }
 
-/* 动态 */
-.post {
-    padding: 15px;
-    border-bottom: 1px solid #eee;
+/* 中间内容 */
+.middle {
+    width: 60%;
+    padding: 20px;
 }
 
-.post img {
-    width: 100%;
-    border-radius: 10px;
-    margin-top: 10px;
-}
-
-。actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-    color: gray;
-}
-
-/* ================= 右侧（轻量信息） ================= */
-.rightbar {
-    width: 32%;
+/* 右侧 */
+.right {
+    width: 20%;
+    background: #d8ecff;
     padding: 15px;
 }
 
@@ -157,164 +52,131 @@ body {
 .card {
     background: white;
     padding: 15px;
-    border-radius: 12px;
-    margin-bottom: 12px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
 }
 
 /* 相册 */
-。gallery {
+.gallery {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 5px;
+    gap: 8px;
 }
 
-。gallery img {
+.gallery img {
     width: 100%;
-    border-radius: 6px;
-}
-
-/* 标签 */
-。标签 span {
-    display: inline-block;
-    background: #e8f5fe;
-    padding: 4px 8px;
-    border-radius: 15px;
-    margin: 3px;
-    font-size: 12px;
-}
-
-/* 列表 */
-。list {
-    font-size: 14px;
-    color: #333;
-}
-
-.list div {
-    margin: 5px 0;
-}
-
-/* 工具 */
-。工具 {
-    display: block;
-    background: #e8f5fe;
-    padding: 6px;
+    height: 90px;
+    object-fit: cover;
     border-radius: 10px;
-    margin-top: 6px;
-    text-align: center;
     cursor: pointer;
+    transition: 0.2s;
 }
 
-.tool:hover {
-    background: #d0eaff;
+.gallery img:hover {
+    transform: scale(1.05);
 }
 
+/* 手机适配 */
+@media (max-width: 800px) {
+    .container {
+        flex-direction: column;
+    }
+    .left, .middle, .right {
+        width: 100%;
+    }
+    .gallery {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* 图片放大层 */
+#modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    justify-content: center;
+    align-items: center;
+}
+
+#modal img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 10px;
+}
 </style>
 </head>
 
 <body>
 
-<div class="layout">
+<div class="container">
 
-<!-- 左侧（增强+对称） -->
-<div class="sidebar">
-
-    <div class="profile">
-        <div class="avatar">我</div>
-        <p>旅行博主 · 摄影爱好者</p>
+    <!-- 左侧 -->
+    <div class="left">
+        <h3>📌 导航</h3>
+        <div class="nav-item">🏠 首页</div>
+        <div class="nav-item">📷 相册</div>
+        <div class="nav-item">📝 博客</div>
+        <div class="nav-item">🌍 旅行</div>
     </div>
 
-    <a href="#"><i class="fa-solid fa-house"></i> 首页</a>
-    <a href="#"><i class="fa-solid fa-image"></i> 相册</a>
-    <a href="#"><i class="fa-solid fa-map"></i> 足迹</a>
-    <a href="#"><i class="fa-solid fa-book"></i> 游记</a>
+    <!-- 中间 -->
+    <div class="middle">
 
-    <div class="post-btn">发布动态</div>
-</div>
-
-<!-- 中间（核心） -->
-<div class="main">
-
-    <div class="header">旅行动态</div>
-
-    <div class="editor">
-        <div>
-            <textarea id="text" placeholder="分享你的旅行故事..."></textarea>
-            <input id="img" placeholder="图片链接（可选）">
-            <button onclick="addPost()">发布</button>
+        <div class="card">
+            <h2>✈️ 我的旅行记录</h2>
+            <p>记录生活中的每一次旅行与风景。</p>
         </div>
-    </div>
 
-    <div id="postList"></div>
+        <div class="card">
+            <h3>📷 最新相册</h3>
 
-</div>
-
-<!-- 右侧（轻量均衡） -->
-<div class="rightbar">
-
-    <div class="card">
-        <h3>📷 相册</h3>
-        <div class="gallery">
-            <img src="bloh-test/images/IMG_1824.jpeg">
-            <img src="bloh-test/images/IMG_1825.JPG">
-            <img src="bloh-test/images/IMG_1826.jpeg">
+            <div class="gallery">
+                <img src="images/IMG_1824.jpeg" onclick="openImg(this)">
+                <img src="images/IMG_1825.JPG" onclick="openImg(this)">
+                <img src="images/IMG_1826.jpeg" onclick="openImg(this)">
+            </div>
         </div>
-    </div>
 
-    <div class="card">
-        <h3>🌍 热门目的地</h3>
-        <div class="tags">
-            <span>#东京</span>
-            <span>#巴黎</span>
-            <span>#冰岛</span>
-            <span>#巴厘岛</span>
+        <div class="card">
+            <h3>📝 博客文章</h3>
+            <p>今天去了一个很美的地方，天气很好，心情也很好。</p>
         </div>
+
     </div>
 
-    <div class="card">
-        <h3>🗺 足迹</h3>
-        <div class="list">
-            <div>📍 上海</div>
-            <div>📍 东京</div>
-            <div>📍 首尔</div>
-            <div>📍 新加坡</div>
+    <!-- 右侧 -->
+    <div class="right">
+        <div class="card">
+            <h3>📊 统计</h3>
+            <p>相册：3</p>
+            <p>文章：1</p>
         </div>
-    </div>
 
-    <div class="card">
-        <h3>🧰 工具</h3>
-        <div class="tool">🗺 地图</div>
-        <div class="tool">📝 行程</div>
-        <div class="tool">📅 日历</div>
+        <div class="card">
+            <h3>🌤 天气</h3>
+            <p>晴天 ☀️</p>
+        </div>
     </div>
 
 </div>
 
+<!-- 放大图片 -->
+<div id="modal" onclick="closeImg()">
+    <img id="modalImg">
 </div>
 
 <script>
-function addPost() {
-    let text = document.getElementById("text").value;
-    let img = document.getElementById("img").value;
+function openImg(img) {
+    document.getElementById("modal").style.display = "flex";
+    document.getElementById("modalImg").src = img.src;
+}
 
-    if (!text.trim()) return alert("请输入内容");
-
-    let post = document.createElement("div");
-    post.className = "post";
-
-    post.innerHTML = `
-        <p>${text}</p>
-        ${img ? `<img src="${img}">` : ""}
-        <div class="actions">
-            <span>💬 评论</span>
-            <span>🔁 转发</span>
-            <span>❤️ 喜欢</span>
-        </div>
-    `;
-
-    document.getElementById("postList").prepend(post);
-
-    document.getElementById("text").value = "";
-    document.getElementById("img").value = "";
+function closeImg() {
+    document.getElementById("modal").style.display = "none";
 }
 </script>
 
